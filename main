@@ -1,0 +1,107 @@
+# Program Name: Lab6.py
+# Course: IT1114/Section XXX
+# Student Name: Daniel Urdaneta
+# Assignment Number: Lab6
+# Due Date: 10/13/2024
+# Purpose: This program defines a Worker class that stores and manages information about office workers, such as employee number, office number, name, birthdate, hours worked, and overtime hours. The class provides methods for getting and setting these values, including validation for office number and birthdate.
+# List of resources used: Python documentation
+
+class Worker:
+    def __init__(self):
+        """Constructor initializes default values for all attributes."""
+        self.employee_number = None        # Employee number (int or None initially)
+        self.office_number = None          # Office number (int or None initially)
+        self.name = {'first': '', 'last': ''}  # Name stored as dictionary with first and last
+        self.birthdate = {'day': 0, 'month': 0, 'year': 0}  # Birthdate stored as dictionary with day, month, and year
+        self.total_hours_worked = 0        # Total hours worked (int)
+        self.total_overtime_hours = 0      # Total overtime hours worked (int)
+
+    def get_employee_number(self):
+        """Returns the worker's employee number."""
+        return self.employee_number
+
+    def set_employee_number(self, x):
+        """Sets the worker's employee number to the given value."""
+        self.employee_number = x
+
+    def get_office_number(self):
+        """Returns the worker's office number."""
+        return self.office_number
+
+    def set_office_number(self, x):
+        """Sets the office number to the given value.
+        
+        Valid office numbers are between 100 and 500 (inclusive). Returns True if valid, False otherwise.
+        """
+        if 100 <= x <= 500:
+            self.office_number = x
+            return True
+        else:
+            return False
+
+    def get_name(self):
+        """Returns the worker's full name in the format 'First Last'."""
+        return f"{self.name['first']} {self.name['last']}"
+
+    def set_name(self, first_name, last_name):
+        """Sets the worker's first and last name."""
+        self.name['first'] = first_name
+        self.name['last'] = last_name
+
+    def set_birthdate(self, d, m, y):
+        """Sets the worker's birthdate to the given day (d), month (m), and year (y).
+        
+        Returns True if the month is between 1-12 and the day is between 1-31. Returns False if invalid.
+        """
+        if 1 <= m <= 12 and 1 <= d <= 31:
+            self.birthdate['day'] = d
+            self.birthdate['month'] = m
+            self.birthdate['year'] = y
+            return True
+        else:
+            return False
+
+    def get_hours_worked(self):
+        """Returns the total number of hours worked by the worker."""
+        return self.total_hours_worked
+
+    def add_hours(self, x):
+        """Adds 'x' hours to the worker's total hours worked.
+        
+        If the number of hours is greater than 9, adds 9 hours to total hours worked and the remainder to overtime.
+        """
+        if x > 9:
+            self.total_hours_worked += 9
+            self.total_overtime_hours += (x - 9)
+        else:
+            self.total_hours_worked += x
+
+    def get_hours_overtime(self):
+        """Returns the total number of overtime hours worked by the worker."""
+        return self.total_overtime_hours
+
+
+def main():
+    # Create an instance of Worker
+    worker = Worker()
+    
+    # Set worker information
+    worker.set_employee_number(12345)
+    worker.set_office_number(250)
+    worker.set_name("John", "Doe")
+    worker.set_birthdate(12, 5, 1990)
+    
+    # Add hours worked (e.g., 12 hours, 3 of which are overtime)
+    worker.add_hours(12)
+
+    # Print worker information
+    print("Employee Number:", worker.get_employee_number())
+    print("Office Number:", worker.get_office_number())
+    print("Name:", worker.get_name())
+    print("Birthdate:", worker.birthdate)
+    print("Hours Worked:", worker.get_hours_worked())
+    print("Overtime Hours:", worker.get_hours_overtime())
+
+# Execute the main function when the script is run directly
+if __name__ == "__main__":
+    main()
